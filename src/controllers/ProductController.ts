@@ -15,8 +15,8 @@ export default class ProductController implements IProductController {
     return product;
   }
 
-  async getAll (): Promise<Array<IProductGet>> {
-    const products = await this.productModel.getAll({}) as Array<IProductGet>;
+  async getAll (limit:number, offset:number): Promise<Array<IProductGet>> {
+    const products = await this.productModel.getAll({}, limit, offset) as Array<IProductGet>;
     return products;
   }
 

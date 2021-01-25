@@ -7,9 +7,12 @@ export default class ProductModel {
     return result;
   }
 
-  async getAll (filter:object): Promise<any> {
+  async getAll (filter:object, limit:number, offset:number): Promise<any> {
     const validatedFilter = filter === null || filter === undefined ? {} : filter;
-    const result = await conn('products').where(validatedFilter).then().catch((_) => {});
+    const result = await conn('products').where(validatedFilter)
+      .limit(limit)
+      .offset(offset)
+      .then().catch((_) => {});
     return result;
   }
 
