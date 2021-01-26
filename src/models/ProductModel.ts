@@ -7,11 +7,18 @@ export default class ProductModel {
     return result;
   }
 
-  async getAll (filter:object, limit:number, offset:number): Promise<any> {
-    const validatedFilter = filter === null || filter === undefined ? {} : filter;
-    const result = await conn('products').where(validatedFilter)
+  async getAll (nameLike:string, limit:number, offset:number): Promise<any> {
+    let where = '1 = 1';
+
+    if (nameLike || nameLike.length > 0) {
+      where = `name LIKE '%${nameLike}%'`;
+    }
+
+    const result = await conn('products')
+      .whereRaw(where)
       .limit(limit)
       .offset(offset)
+      .orderBy('name')
       .then().catch((_) => {});
     return result;
   }

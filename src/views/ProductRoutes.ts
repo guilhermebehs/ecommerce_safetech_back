@@ -21,10 +21,11 @@ export default class ProductRoutes extends AbstractRoutes {
 
     createGetAllResourcesRoute () {
       this.routes.get('/products', async (req:Request, res:Response) => {
-        const limit = Number(req.query.number || 5);
+        const limit = Number(req.query.number || 10);
         const offset = Number(req.query.offset || 0);
+        const nameLike = req.query.nameLike || '';
 
-        const products = await this.productController.getAll(limit, offset);
+        const products = await this.productController.getAll(String(nameLike), limit, offset);
         return res.json(products);
       });
     }
